@@ -1,21 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-
 // Web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCAYOYDuMKGGjTSJL5uDzG5hjQ6y_vYPiI",
-  authDomain: "auction-website-b12fc.firebaseapp.com",
-  databaseURL: "https://auction-website-b12fc.firebaseio.com",
-  projectId: "auction-website-b12fc",
-  storageBucket: "auction-website-b12fc.appspot.com",
-  messagingSenderId: "791747024664",
-  appId: "1:791747024664:web:215a222a81c6d0c2aeb06d",
+  apiKey: "AIzaSyA3HORx27QxW77zVYXAbe_199pPRosGgWI",
+  authDomain: "sojourners-lun-auction.firebaseapp.com",
+  projectId: "sojourners-lun-auction",
+  storageBucket: "sojourners-lun-auction.firebasestorage.app",
+  messagingSenderId: "418386152634",
+  appId: "1:418386152634:web:2f61352d0f38e462c00683",
+  measurementId: "G-1CSR5MSD3N",
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 // Initialize Firestore and Auth
 export const db = getFirestore(app);
 export const auth = getAuth(app);
