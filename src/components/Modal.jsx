@@ -47,7 +47,6 @@ const ItemModal = () => {
   const { activeItem, openModal, closeModal } = useContext(ModalsContext);
   const [secondaryImageSrc, setSecondaryImageSrc] = useState("");
   const minIncrease = 1;
-  const maxIncrease = 10;
   const [bid, setBid] = useState();
   const [valid, setValid] = useState("");
   const [isSubmitting, setIsSubmitting] = useState("");
@@ -115,13 +114,6 @@ const ItemModal = () => {
       setIsSubmitting(false);
       return;
     }
-    // Ensure input is small enough
-    if (amount > status.amount + maxIncrease) {
-      setFeedback(`For the demo you can only increase the price up to ${activeItem.currency}${maxIncrease} per bid.`);
-      setValid("is-invalid");
-      setIsSubmitting(false);
-      return;
-    }
     // Finally, place bid
     updateDoc(doc(db, "auction", "items"), {
       [formatField(activeItem.id, status.bids + 1)]: {
@@ -171,7 +163,7 @@ const ItemModal = () => {
           <div className="invalid-feedback">{feedback}</div>
         </div>
         <label className="form-label">Enter {minBid} or more</label>
-        <p className="text-muted">(This is just a demo, you&apos;re not bidding real money)</p>
+        <p className="text-muted">(All bids are binding, please bid carefully!)</p>
       </div>
     </Modal>
   );
@@ -201,7 +193,7 @@ const SignUpModal = () => {
   };
 
   return (
-    <Modal type={ModalTypes.SIGN_UP} title="Sign up for Markatplace Auction">
+    <Modal type={ModalTypes.SIGN_UP} title="Sign up for LUN Auction">
       <div className="modal-body">
         <p>
           We use anonymous authentication provided by Google. Your account is
