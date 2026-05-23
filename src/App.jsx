@@ -16,6 +16,7 @@ import { SignUpModal } from "./components/Modal";
 import HomePage from "./pages/Home";
 import AdminPage from "./pages/Admin";
 import Footer from "./components/Footer";
+import { OutbidNotifier } from "./components/OutbidNotifier";
 
 function App() {
   const demo = false;
@@ -52,6 +53,7 @@ function App() {
           />
         </Routes>
       </Router>
+      <OutbidNotifier />
       <Footer />
     </Providers>
   );

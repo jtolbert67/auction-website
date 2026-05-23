@@ -4,15 +4,14 @@ import { itemStatus } from "../utils/itemStatus";
 import { formatTime, formatMoney } from "../utils/formatString";
 import { ModalsContext } from "../contexts/ModalsContext";
 import { ModalTypes } from "../utils/modalTypes";
-import { auth } from "../firebase/config";
 
 export const Item = ({ item }) => {
   const { openModal } = useContext(ModalsContext);
+
   const [primaryImageSrc, setPrimaryImageSrc] = useState("");
   const [bids, setBids] = useState(0);
   const [amount, setAmount] = useState(item.startingPrice);
   const [timeLeft, setTimeLeft] = useState("");
-  const [bidStatus, setBidStatus] = useState(null); // "winning" | "outbid" | null
 
   useEffect(() => {
     const status = itemStatus(item);
@@ -21,21 +20,10 @@ export const Item = ({ item }) => {
   }, [item]);
 
   useEffect(() => {
-    const uid = auth.currentUser?.uid;
-    const bidList = Object.values(item.bids ?? {});
-    const userHasBid = uid && bidList.some((b) => b.uid === uid);
-    if (!userHasBid) {
-      setBidStatus(null);
-      return;
-    }
-    const { winner } = itemStatus(item);
-    setBidStatus(winner === uid ? "winning" : "outbid");
-  }, [item]);
-
-  useEffect(() => {
     const updateTimer = () => {
       const now = Date.now();
       const remaining = item.endTime - now;
+
       if (remaining > 0) {
         setTimeLeft(formatTime(remaining));
         requestAnimationFrame(updateTimer);
@@ -43,6 +31,7 @@ export const Item = ({ item }) => {
         setTimeLeft("Item Ended");
       }
     };
+
     requestAnimationFrame(updateTimer);
   }, [item.endTime]);
 
@@ -63,12 +52,6 @@ export const Item = ({ item }) => {
         <div className="card-body">
           <h5 className="title">{item.title}</h5>
           <h6 className="card-subtitle mb-2 text-body-secondary">{item.subtitle}</h6>
-          {bidStatus === "winning" && (
-            <span className="badge bg-success">You're winning</span>
-          )}
-          {bidStatus === "outbid" && (
-            <span className="badge bg-danger">Outbid</span>
-          )}
         </div>
         <ul className="list-group list-group-flush">
           <li className="list-group-item"><strong>{amount}</strong></li>
